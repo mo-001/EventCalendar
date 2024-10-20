@@ -1,0 +1,145 @@
+﻿@using System.Globalization
+@using System.Web
+@model IEnumerable<EventCalendar.Models.Event>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    // Initialize from ViewBag
+    int currentMonth = ViewBag.month == 0 ? DateTime.Now.Month : ViewBag.month;
+    int currentYear = ViewBag.year == 0 ? DateTime.Now.Year : ViewBag.year;
+
+    // Correct calculation based on selected year/month
+    var firstDayofMonth = new DateTime(currentYear, currentMonth, 1).DayOfWeek;
+    var offset = (int)firstDayofMonth - 1;
+    var daysInMonth = DateTime.DaysInMonth(currentYear, currentMonth);
+}
+
+<p>Current Month: @currentMonth</p>
+<p>Current Year: @currentYear</p>
+
+<!-- Navigation links with correct logic for month/year wrap -->
+<a asp-action="Index" asp-route-month="@(currentMonth == 1 ? 12 : currentMonth - 1)" asp-route-year="@(currentMonth == 1 ? currentYear - 1 : currentYear)">Previous Month</a>
+
+<a asp-action="Index" asp-route-month="@(currentMonth == 12 ? 1 : currentMonth + 1)" asp-route-year="@(currentMonth == 12 ? currentYear + 1 : currentYear)">Next Month</a><p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Monday
+            </th>
+            <th>
+                Tuesday
+            </th>
+            <th>
+                Wednesday
+            </th>
+            <th>
+                Thursday
+            </th>
+            <th>
+                Friday
+            </th>
+            <th>
+                Saturday
+            </th>
+            <th>
+                Sunday
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int currentDay = 1;
+            for (int x = 0; x < daysInMonth; x += 7)
+            {
+                <tr>
+                    @if (x == 0)
+                    {
+                        @for (int y = 0; y < offset; y++)
+                        {
+                            <td></td>
+                        }
+                        @for (int z = 0; z < 7 - offset; z++)
+                        {
+
+                            @if (currentDay <= daysInMonth)
+                            {
+                                <td>
+                                    <div class="day">@currentDay</div>
+                                    <div class="events">
+                                        @{
+                                            @foreach (var item in Model)
+                                            {
+                                                if (item.StartDate.Day == currentDay &&
+                                                item.StartDate.Month == currentMonth
+                                                && item.StartDate.Year == currentYear)
+                                                {
+
+                                                    <a href="EventModels/Details/@item.Id"> @item.StartDate.Hour:@item.StartDate.Minute -  @item.Title </a>
+                                                }
+
+                                            }
+                                        }
+                                    </div>
+                                </td>
+
+                            }
+                            currentDay++;
+                        }
+
+                    }
+                    else
+                    {
+                        @for (int z = 0; z < 7; z++)
+                        {
+                            @if (x == 0)
+                            {
+
+                            }
+                            @if (currentDay <= daysInMonth)
+                            {
+                                <td>
+                                    <div class="day">@currentDay</div>
+                                    <div class="events">
+                                        @{
+                                            @foreach (var item in Model)
+                                            {
+                                                if (item.StartDate.Day == currentDay &&
+                                                item.StartDate.Month == currentMonth
+                                                && item.StartDate.Year == currentYear)
+                                                {
+
+                                                    <a href="EventModels/Details/@item.Id"> @item.Title </a>
+                                                }
+
+                                            }
+                                        }
+                                    </div>
+                                </td>
+
+                            }
+                            currentDay++;
+                        }
+                    }
+
+                </tr>
+            }
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        }
+    </tbody>
+</table>

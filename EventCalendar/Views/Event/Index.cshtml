@@ -1,0 +1,112 @@
+﻿@using System.Globalization
+@using System.Web
+@model IEnumerable<EventCalendar.Models.Event>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    //month initialization
+    int currentMonth = ViewBag.month == 0 ? DateTime.Now.Month : ViewBag.month;
+    int currentYear = ViewBag.year == 0 ? DateTime.Now.Year : ViewBag.year;
+
+    //firstDay, offset, and daysinMonth intiailization for logic
+    var firstDayofMonth = new DateTime(currentYear, currentMonth, 1).DayOfWeek;
+    var offset = (int)firstDayofMonth - 1;
+    var daysInMonth = DateTime.DaysInMonth(currentYear, currentMonth);
+}
+
+<p>Current Month: @currentMonth</p>
+<p>Current Year: @currentYear</p>
+
+<a asp-action="Index" asp-route-month="@(currentMonth == 1 ? 12 : currentMonth - 1)" asp-route-year="@(currentMonth == 1 ? currentYear - 1 : currentYear)">Previous Month</a>
+<a asp-action="Index" asp-route-month="@(currentMonth == 12 ? 1 : currentMonth + 1)" asp-route-year="@(currentMonth == 12 ? currentYear + 1 : currentYear)">Next Month</a><p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Monday
+            </th>
+            <th>
+                Tuesday
+            </th>
+            <th>
+                Wednesday
+            </th>
+            <th>
+                Thursday
+            </th>
+            <th>
+                Friday
+            </th>
+            <th>
+                Saturday
+            </th>
+            <th>
+                Sunday
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int currentDay = 1;
+            for (int x = 0; x < daysInMonth; x += 7)
+            {
+                <tr>
+                    @if (x == 0)
+                    {
+                        @for (int y = 0; y < offset; y++)
+                        {
+                            <td></td>
+                        }
+                        @for (int z = 0; z < 7 - offset; z++)
+                        {
+
+                            @if (currentDay <= daysInMonth)
+                            {
+                                <td>
+                                    <div class="day">@currentDay</div>
+                                    <div class="events">
+                                        @{
+                                           
+                                        }
+                                    </div>
+                                </td>
+
+                            }
+                            currentDay++;
+                        }
+
+                    }
+                    else
+                    {
+                        @for (int z = 0; z < 7; z++)
+                        {
+                            @if (x == 0)
+                            {
+
+                            }
+                            @if (currentDay <= daysInMonth)
+                            {
+                                <td>
+                                    <div class="day">@currentDay</div>
+                                    <div class="events">
+                                        @{
+                                           
+                                        }
+                                    </div>
+                                </td>
+
+                            }
+                            currentDay++;
+                        }
+                    }
+
+                </tr>
+            }
+        }
+         
+    </tbody>
+</table>

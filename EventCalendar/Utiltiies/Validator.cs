@@ -5,9 +5,15 @@
         //validates the event title
         public static bool validateTitle(string title)
         {
-            //placeholder logic
-            return true;
+            return title.Length < 50 ? true : false;
 
         }
+
+        public static bool validateDescription(string description)
+        {
+            return description.Length < 500 ? true : false;
+        }
+
+
     }
 }

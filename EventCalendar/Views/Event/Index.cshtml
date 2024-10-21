@@ -3,14 +3,15 @@
 @model IEnumerable<EventCalendar.Models.Event>
 
 @{
+
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    //month initialization
+    // Initialize from ViewBag
     int currentMonth = ViewBag.month == 0 ? DateTime.Now.Month : ViewBag.month;
     int currentYear = ViewBag.year == 0 ? DateTime.Now.Year : ViewBag.year;
 
-    //firstDay, offset, and daysinMonth intiailization for logic
+    // Correct calculation based on selected year/month
     var firstDayofMonth = new DateTime(currentYear, currentMonth, 1).DayOfWeek;
     var offset = (int)firstDayofMonth - 1;
     var daysInMonth = DateTime.DaysInMonth(currentYear, currentMonth);
@@ -18,8 +19,13 @@
 
 <p>Current Month: @currentMonth</p>
 <p>Current Year: @currentYear</p>
-
+@foreach (var item in Model)
+{
+    <p>test</p>
+}
+<!-- Navigation links with correct logic for month/year wrap -->
 <a asp-action="Index" asp-route-month="@(currentMonth == 1 ? 12 : currentMonth - 1)" asp-route-year="@(currentMonth == 1 ? currentYear - 1 : currentYear)">Previous Month</a>
+
 <a asp-action="Index" asp-route-month="@(currentMonth == 12 ? 1 : currentMonth + 1)" asp-route-year="@(currentMonth == 12 ? currentYear + 1 : currentYear)">Next Month</a><p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -70,7 +76,17 @@
                                     <div class="day">@currentDay</div>
                                     <div class="events">
                                         @{
-                                           
+                                            @foreach (var item in Model)
+                                            {
+                                                if (item.StartDate.Day == currentDay &&
+                                                item.StartDate.Month == currentMonth
+                                                && item.StartDate.Year == currentYear)
+                                                {
+
+                                                    <a href="Details/@item.Id"> @item.StartDate.Hour:@item.StartDate.Minute -  @item.Title </a>
+                                                }
+
+                                            }
                                         }
                                     </div>
                                 </td>
@@ -94,7 +110,17 @@
                                     <div class="day">@currentDay</div>
                                     <div class="events">
                                         @{
-                                           
+                                            @foreach (var item in Model)
+                                            {
+                                                if (item.StartDate.Day == currentDay &&
+                                                item.StartDate.Month == currentMonth
+                                                && item.StartDate.Year == currentYear)
+                                                {
+
+                                                    <a href="Details/@item.Id"> @item.Title </a>
+                                                }
+
+                                            }
                                         }
                                     </div>
                                 </td>
@@ -107,6 +133,6 @@
                 </tr>
             }
         }
-         
+        
     </tbody>
 </table>

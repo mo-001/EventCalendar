@@ -13,10 +13,11 @@ namespace EventCalendar.Controllers
     public class EventController : Controller
     {
 
-        public DatabaseConnector _db = new DatabaseConnector("");
+        public DatabaseConnector _db = new DatabaseConnector();
         /**
          * 
          */
+        // GET /
         public IActionResult Index(int month, int year = 2024)
         {
             if (month > 12)
@@ -32,23 +33,27 @@ namespace EventCalendar.Controllers
 
             ViewBag.month = month;
             ViewBag.year = year;
-            return View(_db.RetrieveEvents());
+            var events = _db.RetrieveEvents();
+            return View(events);
         }
 
         /**
          */
-        public IActionResult Details()
+        // GET /Details/{id}
+        public IActionResult Details(int id)
         {
-            return View();
+            Event e = _db.RetrieveEvent(id);
+            return View(e);
         }
 
         public IActionResult Create()
         {
-            return View();
+            return View("Create");
         }
 
-        public IActionResult Update()
+        public IActionResult Update(int id)
         {
+            Event e = _db.RetrieveEvent(id);
             return View();
         }
 
@@ -77,7 +82,7 @@ namespace EventCalendar.Controllers
             {
                 return RedirectToAction("Error");
             }
-            return null;
+            return View();
         }
 
         [HttpPost]

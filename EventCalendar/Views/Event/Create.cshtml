@@ -1,32 +1,31 @@
-﻿@model Event
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using System.Globalization
+@using System.Web
+@model Event
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     <div id="create-form" class="form">
     <form action="Create" method="post">
-            <label>
-                Start Date:
-                <input type="date" name="event-start-date" />
-
-            </label>
-            <label>
-                End Date:
-                <input type="date" name="event-end-date" />
-
-            </label>
+          
         <label>
-            Name:
-            <input type="name" name="event-name"/>
+            Title:
+            <input type="title" name="event-name"/>
 
         </label>
         <label>
             Description:
             <input type="description" name="event-description" />
         </label>
+            <label>
+                Start Date:
+                <input type="date" name="event-start-date" />
+            </label>
+            <label>
+                End Date:
+                <input type="date" name="event-end-date" />
+
+            </label>
     </form>
 </div>
 }

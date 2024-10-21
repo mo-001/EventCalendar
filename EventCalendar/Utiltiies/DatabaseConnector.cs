@@ -9,13 +9,10 @@ public class DatabaseConnector
     public SqliteConnection conn = new SqliteConnection();
 
     // Constructor that accepts a connection string
-    public DatabaseConnector(string connection_string)
-    {
-        conn.ConnectionString = connection_string;
-    }
+    
     public DatabaseConnector()
     {
-        conn.ConnectionString = "";
+        conn.ConnectionString = "Data Source=.\\Data\\events.db";
     }
 
     public void setConnectionString(string connection_string)
@@ -36,13 +33,13 @@ public class DatabaseConnector
     public void StoreEvent(Event e)
     {
         OpenConnection();
-        var sql = "INSERT INTO Events (Title, Description, StartDate, EndDate) VALUES (@Title, @Description, @StartDate, @EndDate)";
+        var sql = "INSERT INTO Events (Title, Description, start_date, end_date) VALUES (@Title, @Description, @start_date, @end_date)";
         using (var cmd = new SqliteCommand(sql, conn))
         {
             cmd.Parameters.AddWithValue("@Title", e.Title);
             cmd.Parameters.AddWithValue("@Description", e.Description);
-            cmd.Parameters.AddWithValue("@StartDate", e.StartDate);
-            cmd.Parameters.AddWithValue("@EndDate", e.EndDate);
+            cmd.Parameters.AddWithValue("@start_date", e.StartDate);
+            cmd.Parameters.AddWithValue("@end_date", e.EndDate);
             cmd.ExecuteNonQuery();
         }
         CloseConnection();
@@ -65,13 +62,13 @@ public class DatabaseConnector
     public void UpdateEvent(Event e)
     {
         OpenConnection();
-        var sql = "UPDATE Events SET Title = @Title, Description = @Description, StartDate = @StartDate, EndDate = @EndDate WHERE Id = @Id";
+        var sql = "UPDATE Events SET Title = @Title, Description = @Description, start_date = @start_date, end_date = @end_date WHERE Id = @Id";
         using (var cmd = new SqliteCommand(sql, conn))
         {
             cmd.Parameters.AddWithValue("@Title", e.Title);
             cmd.Parameters.AddWithValue("@Description", e.Description);
-            cmd.Parameters.AddWithValue("@StartDate", e.StartDate);
-            cmd.Parameters.AddWithValue("@EndDate", e.EndDate);
+            cmd.Parameters.AddWithValue("@start_date", e.StartDate);
+            cmd.Parameters.AddWithValue("@end_date", e.EndDate);
             cmd.Parameters.AddWithValue("@Id", e.Id);
             cmd.ExecuteNonQuery();
         }
@@ -82,7 +79,7 @@ public class DatabaseConnector
     public Event RetrieveEvent(int id)
     {
         OpenConnection();
-        var sql = "SELECT Id, Title, Description, StartDate, EndDate FROM Events WHERE Id = @Id";
+        var sql = "SELECT Id, Title, Description, start_date, end_date FROM Events WHERE Id = @Id";
         using (var cmd = new SqliteCommand(sql, conn))
         {
             cmd.Parameters.AddWithValue("@Id", id);
@@ -111,7 +108,7 @@ public class DatabaseConnector
     public List<Event> RetrieveEvents()
     {
         OpenConnection();
-        var sql = "SELECT Id, Title, Description, StartDate, EndDate FROM Events";
+        var sql = "SELECT Id, Title, Description, start_date, end_date FROM Events";
         var events = new List<Event>();
         using (var cmd = new SqliteCommand(sql, conn))
         {
@@ -143,4 +140,5 @@ public class DatabaseConnector
             conn.Close();
         }
     }
+
 }

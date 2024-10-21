@@ -1,15 +1,18 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using System.Globalization
+@using System.Web
+@model EventCalendar.Models.Event 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
 
 <div class="details-form">
-    <div class="">
-
+    <div class="details">
+        <p>@Model.Title</p>
+        <p>@Model.Description</p>
+        <p>@Model.StartDate</p>
+        <p>@Model.EndDate</p>
 
     </div>
     <a asp-action="Update">Update</a>

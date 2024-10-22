@@ -6,26 +6,36 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     <div id="create-form" class="form">
-    <form action="Create" method="post">
-          
+    <form action="/Event/Create" method="post">
+         <h2>Create Form</h2>
         <label>
             Title:
-            <input type="title" name="event-name"/>
-
+            <input type="text" name="title"/>
+            <br />
+            <br/>
         </label>
         <label>
             Description:
-            <input type="description" name="event-description" />
+            <input type="text" name="description" />
+                <br />
+                <br />
+
         </label>
             <label>
                 Start Date:
-                <input type="date" name="event-start-date" />
+                <input type="datetime-local" name="start_date" id="start_date" />
+                <br />
+                <br />
+
             </label>
             <label>
                 End Date:
-                <input type="date" name="event-end-date" />
+                <input type="datetime-local" name="end_date"  id="end_date" />
+                <br />
+                <br />
 
             </label>
+            <button type="submit">Submit</button>
     </form>
 </div>
 }

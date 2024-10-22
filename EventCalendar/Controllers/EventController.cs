@@ -54,7 +54,7 @@ namespace EventCalendar.Controllers
         public IActionResult Update(int id)
         {
             Event e = _db.RetrieveEvent(id);
-            return View();
+            return View("Update", e);
         }
 
         public IActionResult Delete()
@@ -88,7 +88,10 @@ namespace EventCalendar.Controllers
         [HttpPost]
         public IActionResult Update(int id, string title, string description, DateTime start_date, DateTime end_date)
         {
+            Console.WriteLine(start_date);
+            Console.WriteLine(end_date);
             Event e = new Event();
+            e.Id = id;
             e.Title = title;
             e.Description = description;
             e.StartDate = start_date;

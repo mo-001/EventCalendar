@@ -19,10 +19,6 @@
 
 <p>Current Month: @currentMonth</p>
 <p>Current Year: @currentYear</p>
-@foreach (var item in Model)
-{
-    <p>test</p>
-}
 <!-- Navigation links with correct logic for month/year wrap -->
 <a asp-action="Index" asp-route-month="@(currentMonth == 1 ? 12 : currentMonth - 1)" asp-route-year="@(currentMonth == 1 ? currentYear - 1 : currentYear)">Previous Month</a>
 
@@ -83,7 +79,7 @@
                                                 && item.StartDate.Year == currentYear)
                                                 {
 
-                                                    <a href="Details/@item.Id"> @item.StartDate.Hour:@item.StartDate.Minute -  @item.Title </a>
+                                                    <a href="/Event/Details/@item.Id">  @item.Title </a>
                                                 }
 
                                             }
@@ -117,7 +113,7 @@
                                                 && item.StartDate.Year == currentYear)
                                                 {
 
-                                                    <a href="Details/@item.Id"> @item.Title </a>
+                                                    <a href="/Event/Details/@item.Id">  @item.Title </a>
                                                 }
 
                                             }

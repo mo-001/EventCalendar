@@ -62,7 +62,7 @@ public class DatabaseConnector
     public void UpdateEvent(Event e)
     {
         OpenConnection();
-        var sql = "UPDATE Events SET Title = @Title, Description = @Description, start_date = @start_date, end_date = @end_date WHERE Id = @Id";
+        var sql = "UPDATE Events SET Title = @Title, Description = @Description, start_date = @start_date, end_date = @end_date WHERE id = @Id";
         using (var cmd = new SqliteCommand(sql, conn))
         {
             cmd.Parameters.AddWithValue("@Title", e.Title);

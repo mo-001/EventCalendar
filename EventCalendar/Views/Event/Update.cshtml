@@ -1,32 +1,40 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using System.Web;
+@using System.Globalization;
+@model EventCalendar.Models.Event;
 @{
     ViewData["Title"] = "Update";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
-
 <div id="update-form" class="form">
-    <form action="Update" method="post">
+    <h2>Update Form</h2>
+    <form asp-for="Update" method="post">
+        <input type="hidden" name="id" value="@Model.Id"/>
         <label>
             Start Date:
-            <input type="date" name="event-start-date" value=""/>
-
+            <input type="datetime-local" name="start_date" id="start_date" value="@Model.StartDate.ToString("yyyy-MM-ddTHH:mm")" />
+            <br/>
         </label>
         <label>
             End Date:
-            <input type="date" name="event-end-date" value=""/>
+            <input type="datetime-local" name="end_date" id="end_date" value="@Model.EndDate.ToString("yyyy-MM-ddTHH:mm")" />
+            <br />
 
         </label>
         <label>
             Name:
-            <input type="name" name="event-name" value=""/>
+            <input asp-for="Title" name="title" value="@Model.Title"/>
+            <br />
 
         </label>
         <label>
             Description:
-            <input type="description" name="event-description" value="" />
+            <input asp-for="Description" name="description" value="@Model.Description" />
+            <br />
+
         </label>
+        <button type="submit">Submit</button>
+
     </form>
 </div>
+

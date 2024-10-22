@@ -5,18 +5,18 @@
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    <div id="create-form" class="form">
-    <form action="/Event/Create" method="post">
+    <div  class="form">
+    <form id="create-form" action="/Event/Create" method="post">
          <h2>Create Form</h2>
         <label>
             Title:
-            <input type="text" name="title"/>
+            <input type="text" name="title" id="title"/>
             <br />
             <br/>
         </label>
         <label>
             Description:
-            <input type="text" name="description" />
+            <input type="text" name="description" id="description" />
                 <br />
                 <br />
 
@@ -39,3 +39,34 @@
     </form>
 </div>
 }
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Form validation
+        $('.form').submit(function (event) {
+            var isValid = true;
+            var title = $('#title').val();
+            var description = $('#description').val();
+            var startDate = $('#start_date').val();
+            var endDate = $('#end_date').val();
+
+            $('.error').remove();
+
+            if (title.length === 0 || title.length > 50) {
+                isValid = false;
+                $('#title').after('<span class="error" style="color:red;">Title must be less than 50 characters</span>');
+            }
+
+            if (description.length === 0 || description.length > 500) {
+                isValid = false;
+                $('#description').after('<span class="error" style="color:red;">Description must be less than 500 characters</span>');
+            }
+
+           
+            if(!isValid){
+                event.preventDefault();
+            }
+        });
+    });
+
+</script>

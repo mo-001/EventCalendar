@@ -6,9 +6,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
-<div id="update-form" class="form">
+<div class="form">
     <h2>Update Form</h2>
-    <form asp-for="Update" method="post">
+    <form asp-for="Update" id="form" class="form" method="post">
         <input type="hidden" name="id" value="@Model.Id"/>
         <label>
             Start Date:
@@ -23,13 +23,13 @@
         </label>
         <label>
             Name:
-            <input asp-for="Title" name="title" value="@Model.Title"/>
+            <input asp-for="Title" name="title" id="title" value="@Model.Title"/>
             <br />
 
         </label>
         <label>
             Description:
-            <input asp-for="Description" name="description" value="@Model.Description" />
+            <input asp-for="Description" name="description" id="description" value="@Model.Description" />
             <br />
 
         </label>
@@ -38,3 +38,33 @@
     </form>
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Form validation
+        $('.form').submit(function (event) {
+            var isValid = true;
+            var title = $('#title').val();
+            var description = $('#description').val();
+            var startDate = $('#start_date').val();
+            var endDate = $('#end_date').val();
+
+            $('.error').remove();
+
+            if (title.length === 0 || title.length > 50) {
+                isValid = false;
+                $('#title').after('<span class="error" style="color:red;">Title must be less than 50 characters</span>');
+            }
+
+            if (description.length === 0 || description.length > 500) {
+                isValid = false;
+                $('#description').after('<span class="error" style="color:red;">Description must be less than 500 characters</span>');
+            }
+           
+            if(!isValid){
+                event.preventDefault();
+            }
+        });
+    });
+
+</script>

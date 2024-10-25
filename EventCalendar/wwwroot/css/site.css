@@ -62,7 +62,7 @@ body {
     .form button[type="submit"] {
         width: 100%;
         padding: 12px;
-        background-color: #dodgerblue;
+        background-color: dodgerblue;
         color: white;
         border: none;
         border-radius: 4px;
@@ -133,7 +133,7 @@ body {
     }
 
         .table .events a {
-            color: #dodgerblue;
+            color: dodgerblue;
             text-decoration: none;
         }
 

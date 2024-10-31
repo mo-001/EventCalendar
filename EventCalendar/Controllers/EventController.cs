@@ -46,24 +46,43 @@ namespace EventCalendar.Controllers
             return View(e);
         }
 
+        /**
+         * @method - Create
+         * @return - View
+         * A method that is designed to return the create view
+         */
         public IActionResult Create()
         {
             return View("Create");
         }
-
+        /**
+         * @method - Update
+         * @param - id - the id of the event to get
+         * @return - View
+         * A method that is designed to return the update view with the retrieved event
+         */
         public IActionResult Update(int id)
         {
             Event e = _db.RetrieveEvent(id);
             return View("Update", e);
         }
-
+        /**
+         * @method - Delete
+         * @return - View
+         * A method that is designed to return the delete view
+         */
         public IActionResult Delete()
         {
             return View();
         }
 
-      
 
+        /**
+         * @method - Create (post)
+         * @return - current page
+         * @params - id, title, description, start_date, end_date (event details)
+         * A method that is designed to create a new event so that it can be stored in the SQLite database.
+         */
         [HttpPost]
         public IActionResult Create(int id, string title, string description, DateTime start_date, DateTime end_date, DatabaseConnector _db)
         {
@@ -84,7 +103,12 @@ namespace EventCalendar.Controllers
             }
             return View();
         }
-
+        /**
+         * @method - Update (post)
+         * @return - current page
+         * @params - id, title, description, start_date, end_date (event details)
+         * A method that is designed to update an event determined by id so that it can be stored in the SQLite database.
+         */
         [HttpPost]
         public IActionResult Update(int id, string title, string description, DateTime start_date, DateTime end_date)
         {
@@ -109,6 +133,12 @@ namespace EventCalendar.Controllers
             return View();
 
         }
+        /**
+         * @method - Delete (post)
+         * @return - current page
+         * @params - id, title, description, start_date, end_date (event details)
+         * A method that is designed to delete an event so that it is removed from the database.
+         */
         [HttpPost]
         public IActionResult Delete(int id)
         {

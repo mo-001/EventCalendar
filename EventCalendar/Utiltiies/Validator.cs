@@ -5,6 +5,7 @@
         //validates the event title
         public static bool validateTitle(string title)
         {
+            //title - if null length check will fail
             return title.Length < 50 && title != null ? true : false;
 
         }
